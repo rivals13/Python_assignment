@@ -41,6 +41,26 @@ def login(type_var):
         print("--" * 20)
 
 
+def email_checker(email):
+    atpos = email.find("@")  ##possible values -1 or greater than this value
+    dot_pos = email.find(".com")
+    local_and_tld = email.split("@")
+    print(f"@ at: {atpos}")
+    print(f"dot at:{dot_pos}")
+
+
+def username_checker(username):
+    digits = ""
+    user_tag = username.rstrip("0123456789")
+    for u in username:
+        if u.isdigit():
+            digits += u
+    print(digits)
+    print(user_tag)
+    if digits != "986532" and user_tag != "LBEF-ad":
+        print("the tag or the nunber is not matching!!")
+
+
 def admin_login():
     print("new function being executed!!")
     # creds!!  username,email and password hunxa!!
@@ -48,25 +68,13 @@ def admin_login():
     tries = 0
     while tries < 3:
         username = input("\nPlease enter your username(LBEF-adXXXXXX):")
-        email = input("Please enter your email:")
+        email = str(input("Please enter your email:"))
         # things to check in email:
         # position of @,.com,
-        if email.find("@") and email.find(".com"):
-            print("@ and .com are present!")
-
-        else:
-            pass
-        digits = ""
-        user_tag = username.rstrip("0123456789")
-        for u in username:
-            if u.isdigit():
-                digits += u
-        print(digits)
-        print(user_tag)
-        if digits != "986532" and user_tag != "LBEF-ad":
-            print("the tag or the nunber is not matching!!")
-            print(f"current try: {tries+1}")
-            tries += 1
+        email_response = email_checker(email)
+        username_response = username_checker(username)
+        print(f"current try: {tries+1}")
+        tries += 1
 
 
 login_type = ""

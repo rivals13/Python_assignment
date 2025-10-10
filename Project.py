@@ -1,4 +1,17 @@
+from mail_checker import email_checker
+from username_checker import username_checker
+import os
+
 isLoggedin = False
+
+
+def clear_screen():
+    # Works on Windows and Linux/macOS
+    os.system("clear 2>/dev/null" if os.name != "nt" else "cls")
+    print("\033[H\033[J", end="")
+
+
+clear_screen()
 
 
 def welcome_display():
@@ -24,7 +37,7 @@ def login(type_var):
         print()
         print(f"you are trying to login in as: '{type_var}'")
         print("--" * 20)
-        admin_login()
+        admin_login()  ## this is the  entry  point of the  function!!!
 
     elif type_var == "staff":
         print()
@@ -41,24 +54,7 @@ def login(type_var):
         print("--" * 20)
 
 
-def email_checker(email):
-    atpos = email.find("@")  ##possible values -1 or greater than this value
-    dot_pos = email.find(".com")
-    local_and_tld = email.split("@")
-    print(f"@ at: {atpos}")
-    print(f"dot at:{dot_pos}")
-
-
-def username_checker(username):
-    digits = ""
-    user_tag = username.rstrip("0123456789")
-    for u in username:
-        if u.isdigit():
-            digits += u
-    print(digits)
-    print(user_tag)
-    if digits != "986532" and user_tag != "LBEF-ad":
-        print("the tag or the nunber is not matching!!")
+# clear_screen()
 
 
 def admin_login():
@@ -68,12 +64,21 @@ def admin_login():
     tries = 0
     while tries < 3:
         username = input("\nPlease enter your username(LBEF-adXXXXXX):")
-        email = str(input("Please enter your email:"))
+        email = str(input("Please enter the valid  email:"))
         # things to check in email:
         # position of @,.com,
         email_response = email_checker(email)
         username_response = username_checker(username)
-        print(f"current try: {tries+1}")
+        # username_response = username_checker(username)
+        print(email_response, username_response)
+        if email_response == True and username_response == True:
+            print("mail verified!!")
+            print("\ncurrent satus: 🟢")
+            ## we can keep  functions for the task  now:
+            break
+        else:
+            print("Try again!!")
+            print(f"current try: {tries+1}")
         tries += 1
 
 

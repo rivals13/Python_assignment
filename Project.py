@@ -1,4 +1,4 @@
-from logins import admin_login, staff_login, user_login
+from functions.logins import admin_login, staff_login, user_login
 
 
 isLoggedin = False

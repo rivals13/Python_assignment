@@ -1,5 +1,5 @@
-from mail_checker import email_checker
-from username_checker import (
+from functions.mail_checker import email_checker
+from functions.username_checker import (
     username_checker_admin,
     username_checker_staff,
     username_checker_user,

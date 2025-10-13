@@ -45,7 +45,13 @@ Integrate modules from other members into the final project.
 
 Final testing and documentation.
 
-Rajkumar Tirwa
+## feature  to be  added:
+***The  Tld  can  be any type  not only.com ..  so
+our  emphasis must be to accept  other tlds  as  well. thank you!!
+eg: sam@yahoo.info
+***
+
+Rajkumar Tiruwa
 
 🔹 Admin & Staff Modules
 

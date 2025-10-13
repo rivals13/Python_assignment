@@ -7,13 +7,6 @@ def email_checker(email):
     tld = email[email.rfind(".") + 1 :]
     valid_tlds = ["com", "info", "org", "net", "edu"]
 
-    print(f"@ at: {atpos}")
-    print(f"@ count:{email.count('@')}")
-    print(f"dot at:{dot_pos}")
-    print(f"user and domain part: {username_and_domain}")
-    print(f"domain used:{domain}")
-    # print(f"tld :{tld[1]}")
-    # checking things:
     if atpos == -1:
         print("Your email address is missing '@'")
         return False
@@ -31,26 +24,26 @@ def email_checker(email):
     #     return False
 
     elif email.startswith(".") or email.endswith("."):
-        print("Wrong position of: .")
+        # print("Wrong position of: .")
         return False
 
     elif email.count("@") == 2:
-        print("@ charcters exceeded")
+        # print("@ charcters exceeded")
         return False
     elif email.count(".") == 2:
-        print(". characters  exceeded!!")
+        # print(". characters  exceeded!!")
         return False
 
     elif not username:
-        print("No username in the email!!")
+        # print("No username in the email!!")
         return False
 
     elif not domain:
-        print("domain(gmail) is missing")
+        # print("domain(gmail) is missing")
         return False
 
     elif tld not in valid_tlds:
-        print("Invalid tld")
+        # print("Invalid tld")
         return False
     else:
         return True

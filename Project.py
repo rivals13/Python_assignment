@@ -1,17 +1,7 @@
-from mail_checker import email_checker
-from username_checker import username_checker
-import os
+from logins import admin_login, staff_login, user_login
+
 
 isLoggedin = False
-
-
-def clear_screen():
-    # Works on Windows and Linux/macOS
-    os.system("clear 2>/dev/null" if os.name != "nt" else "cls")
-    print("\033[H\033[J", end="")
-
-
-clear_screen()
 
 
 def welcome_display():
@@ -43,43 +33,20 @@ def login(type_var):
         print()
         print(f"You are trying to login in as: {type_var}")
         print("--" * 20)
+        staff_login()
 
     elif type_var == "user":
         print()
-        print(f"You are ttrying to login as: {type_var}")
+        print(f"You are trying to login in as: {type_var}")
         print("--" * 20)
+        user_login()
 
     else:
-        print("invalid type!!")
+        print("invalid login type!!")
         print("--" * 20)
 
 
 # clear_screen()
-
-
-def admin_login():
-    print("new function being executed!!")
-    # creds!!  username,email and password hunxa!!
-    # sabai chai correct format ma  hunu paryo!!tries chai  three  times
-    tries = 0
-    while tries < 3:
-        username = input("\nPlease enter your username(LBEF-adXXXXXX):")
-        email = str(input("Please enter the valid  email:"))
-        # things to check in email:
-        # position of @,.com,
-        email_response = email_checker(email)
-        username_response = username_checker(username)
-        # username_response = username_checker(username)
-        print(email_response, username_response)
-        if email_response == True and username_response == True:
-            print("mail verified!!")
-            print("\ncurrent satus: 🟢")
-            ## we can keep  functions for the task  now:
-            break
-        else:
-            print("Try again!!")
-            print(f"current try: {tries+1}")
-        tries += 1
 
 
 login_type = ""

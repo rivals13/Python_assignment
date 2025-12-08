@@ -96,3 +96,10 @@ Track deposits & withdrawals per customer.
 Generate and print Customer Statement of Account for specified duration (use datetime).
 
 File handling for transactions & balances.
+
+
+
+# Guidelines for the Workload matrix:
+
+**not  write in the form of  percentage
+. Write the portions he has contributed**

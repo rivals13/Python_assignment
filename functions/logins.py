@@ -9,7 +9,7 @@ from functions.username_checker import (
 def admin_login():
     print("new function being executed!!")
     # creds!!  username,email and password hunxa!!
-    # sabai chai correct format ma  hunu paryo!!tries chai  three  times
+    # all must be in correct format  and the tries must be limited to 3...
     tries = 0
     while tries < 3:
         email = str(input("Please enter the valid  email:"))
@@ -26,7 +26,7 @@ def admin_login():
             print("\ncurrent satus: 🟢")
             ## we can keep  functions for the task  now:
             print(
-                " Hello!! यति भयेसि  amdin login भयो । अब आफ़्नो  फ़िचर्स हरु add गर्न मिल्छ।"
+                "Now we are  logged in as Admin.. So, we  must  begin our  tasks  from here.."
             )
 
             break
@@ -46,13 +46,12 @@ def staff_login():
         email = str(input("Please enter the valid  email:"))
         email_response = email_checker(email)
         username_response = username_checker_staff(username)
-        # print(email_response, username_response:kept  for  uncommenting when  required  for  testing
-        # purposes
+
         if email_response == True and username_response == True:
             print("staff mail verified!!")
             print("\ncurrent satus: 🟢")
             isLoggedin = True
-            # print("यति भयेसि staff login भयो । अब आफ़्नो  फ़िचर्स हरु add गर्न मिल्छ।")
+            # print("Now we are  logged in as Staff.. So, we  must  begin our  tasks  from here..")
 
             break
 
@@ -79,7 +78,7 @@ def user_login():
             print("staff mail verified!!")
             print("\ncurrent satus: 🟢")
             isLoggedin = True
-            # print("यति भयेसि user login भयो । अब आफ़्नो  फ़िचर्स हरु add गर्न मिल्छ।")
+            # print("Now we are  logged in as user.. So, we  must  begin our  tasks  from here..")
 
             break
 

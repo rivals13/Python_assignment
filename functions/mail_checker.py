@@ -12,7 +12,7 @@ def email_checker(email):
         return False
 
     elif atpos < 1:
-        print("The postion of '@' is  not correct")
+        print("The position of '@' is  not correct")
         return False
 
     elif dot_pos < 7:

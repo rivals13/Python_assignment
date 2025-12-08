@@ -1,7 +1,9 @@
 from functions.logins import admin_login, staff_login, user_login
+# We have our  functions stored in the functions directory, so  we
+# are just importing the functions in the program.
 
 
-isLoggedin = False
+isLoggedin = False # Initial status of Login
 
 
 def welcome_display():
@@ -11,7 +13,6 @@ def welcome_display():
     print("--" * 20)
     print("1 |Admin login 👨🏻‍💻|")
     print("\n2 |Staff Login 👨🏻‍💼|")
-    print("\n3 |Customer Login 👨🏻‍|")
     print("\n current satus: 🔴")
     print("--" * 20)
 

@@ -1,0 +1,36 @@
+account_number=4844087524
+email=samm@gmail.com
+name= sample user
+account_type=savings
+password=LBEF-usr2116
+balance=2000
+created_on=2025-12-14
+last_logged_in=2025-12-14
+---
+account_number=4505773909
+email=saroj@gmail.com
+name= saroj dangol
+account_type= savings
+password=LBEF-usr3857
+balance=1100
+created_on=2025-12-14
+last_logged_in=2025-12-14
+---
+account_number=4921899333
+email=falcon@gmail.com
+name=Falcon101
+account_type=savings
+password=LBEF-usr5367
+balance=0
+created_on=2025-12-14
+last_logged_in=Never
+---
+account_number=1008310101
+email=rojina@gmail.com
+name=Rojina bhandari
+account_type=Savings
+password=LBEF-usr7728
+balance=1000000
+created_on=2025-12-14
+last_logged_in=2025-12-14
+---

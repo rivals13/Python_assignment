@@ -1,0 +1,15 @@
+account_number=4505773909
+type=DEPOSIT
+amount=1000
+date=2025-12-14
+---
+account_number=4844087524
+type=DEPOSIT
+amount=2000
+date=2025-12-14
+---
+account_number=1008310101
+type=DEPOSIT
+amount=1000000
+date=2025-12-14
+---

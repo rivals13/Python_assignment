@@ -1,9 +1,9 @@
 from functions.logins import admin_login, staff_login, user_login
+from functions.admin_feature import admin_menu
+
 # We have our  functions stored in the functions directory, so  we
 # are just importing the functions in the program.
-
-
-isLoggedin = False # Initial status of Login
+isLoggedin = False  # Initial status of Login
 
 
 def welcome_display():
@@ -13,14 +13,14 @@ def welcome_display():
     print("--" * 20)
     print("1 |Admin login 👨🏻‍💻|")
     print("\n2 |Staff Login 👨🏻‍💼|")
-    print("\n current satus: 🔴")
+    print("\n3 |user Login 👨🏻‍💼|")
+
+    print("\n current status: Not logged in)")
     print("--" * 20)
 
 
 if not isLoggedin:
     welcome_display()
-
-# so login()  vanne function le chai  k garxa vanda hamilai chai.. kun type ko login garna lako vanera vandinxa!
 
 
 def login(type_var):
@@ -29,7 +29,6 @@ def login(type_var):
         print(f"you are trying to login in as: '{type_var}'")
         print("--" * 20)
         admin_login()  ## this is the  entry  point of the  function!!!
-
     elif type_var == "staff":
         print()
         print(f"You are trying to login in as: {type_var}")

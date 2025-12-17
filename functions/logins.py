@@ -1,89 +1,114 @@
 from functions.mail_checker import email_checker
-from functions.username_checker import (
+from functions.password_checker import (
     password_checker_admin,
-    username_checker_staff,
-    username_checker_user,
+    password_checker_staff,
+    password_checker_user,
 )
-
+from functions.admin_feature import admin_menu
+from functions.staff_feature import staff_menu
+from functions.customer_features import user_menu
+from datetime import date
 
 def admin_login():
     print("new function being executed!!")
-    # creds!!  username,email and password hunxa!!
-    # all must be in correct format  and the tries must be limited to 3...
     tries = 0
     while tries < 3:
-        email = str(input("Please enter the valid  email:"))
-        password = input("\nPlease enter your username(LBEF-adXXXXXX):")
+        email = str(input("Please enter the valid email:"))
+        password = input("\nPlease enter your Password(LBEF-adXXXXXX):")
 
-        # things to check in email:
-        # position of @,.com,
-        email_response = email_checker(email)
+        email_result = email_checker(email)
+
+        # Handle different return types
+        if email_result == 0:
+            email_response = 0
+            admin_name = None
+            print("Email validation failed or not registered")
+        else:
+            email_response, admin_name = email_result
+            print(f"Email found - Admin: {admin_name}")
+
         password_response = password_checker_admin(password)
-        # username_response = username_checker(username)
-        print(email_response, password_response)
-        if email_response == True and password_response == True:
-            print(" admin e-mail verified!!")
-            print("\ncurrent satus: 🟢")
-            ## we can keep  functions for the task  now:
-            print(
-                "Now we are  logged in as Admin.. So, we  must  begin our  tasks  from here.."
-            )
 
+        if email_response == 1 and password_response == 1:
+            print("admin e-mail verified!!")
+            print("\ncurrent status: loggedin(🟢)")
+            print(f"Welcome, {admin_name}!")
+            admin_menu()
             break
         else:
             print("Try again!!")
-            print(f"current try: {tries+1}")
-        tries += 1
+            tries += 1
+            print(f"current try: {tries}")
+
+    if tries == 3:
+        print('Thank you for using the tool!')
 
 
 def staff_login():
     tries = 0
-    print("staff login  function executed")
-    if tries == 3:
-        print("Thank you  so much  for using the management tool")
+    print("staff login function executed")
+
     while tries < 3:
-        username = input("\nPlease enter your username(LBEF-stf XXXXXX):")
-        email = str(input("Please enter the valid  email:"))
-        email_response = email_checker(email)
-        username_response = username_checker_staff(username)
+        email = str(input("Please enter the valid email:"))
+        password = input("\nPlease enter your Password(LBEF-stf XXXXXX):")
 
-        if email_response == True and username_response == True:
+        email_result = email_checker(email)
+
+        if email_result == 0:
+            email_response = 0
+            staff_name = None
+            print("Email validation failed or not registered")
+        else:
+            email_response, staff_name = email_result
+            print(f"Email found - Staff: {staff_name}")
+
+        password_response = password_checker_staff(password)
+
+        if email_response == 1 and password_response == 1:
             print("staff mail verified!!")
-            print("\ncurrent satus: 🟢")
-            isLoggedin = True
-            # print("Now we are  logged in as Staff.. So, we  must  begin our  tasks  from here..")
-
+            print("\ncurrent status:  loggedin(🟢)")
+            print(f"Welcome, {staff_name}!")
+            staff_menu()
             break
-
         else:
             print("Try again!!")
-            print(f"current try: {tries+1}")
-            isLoggedin = False
             tries += 1
+            print(f"current try: {tries}")
+
+    if tries == 3:
+        print('Thank you for using the tool!')
 
 
 def user_login():
     tries = 0
-    print("staff login  function executed")
-    if tries == 3:
-        print("Thank you  so much  for using the management tool")
+    print("user login function executed")
+
     while tries < 3:
-        username = input("\nPlease enter your username(LBEF-usr XXXXXX):")
-        email = str(input("Please enter the valid  email:"))
-        email_response = email_checker(email)
-        username_response = username_checker_staff(username)
-        # print(email_response, username_response:kept  for  uncommenting when  required  for  testing
-        # purposes
-        if email_response == True and username_response == True:
-            print("staff mail verified!!")
-            print("\ncurrent satus: 🟢")
-            isLoggedin = True
-            # print("Now we are  logged in as user.. So, we  must  begin our  tasks  from here..")
+        email = str(input("Please enter the valid email:"))
+        password = input("\nPlease enter your password(LBEF-usr XXXXXX):")
 
+        email_result = email_checker(email)
+
+        if email_result == 0:
+            email_response = 0
+            user_name = None
+            print("Email validation failed or not registered")
+        else:
+            email_response, user_name = email_result
+            print(f"Email found - User: {user_name}")
+
+        password_response = password_checker_user(password)
+
+        if email_response == 1 and password_response == 1:
+            print("user mail verified!!")
+            print("\ncurrent status: loggedin(🟢)")
+            print(f"Welcome, {user_name}!")
+            user_menu()
             break
-
         else:
             print("Try again!!")
-            print(f"current try: {tries+1}")
-            isLoggedin = False
             tries += 1
+            print(f"current try: {tries}")
+
+    if tries == 3:
+        print('Thank you for using the tool!')

@@ -1,5 +1,6 @@
 import os
 from datetime import date
+from functions.cli_utils import clear_screen
 
 # File paths for storing data (in parent directory's cred_files folder)
 user_file = "functions/cred_files/user.txt"
@@ -21,14 +22,14 @@ def parse_customer_data(content):
 
         # Initialize with default values
         customer_data = {
-            'account_number': '',
-            'email': '',
-            'name': '',
-            'account_type': '',
-            'password': '',
-            'balance': '0',
-            'created_on': '',
-            'last_logged_in': 'Never'
+            "account_number": "",
+            "email": "",
+            "name": "",
+            "account_type": "",
+            "password": "",
+            "balance": "0",
+            "created_on": "",
+            "last_logged_in": "Never",
         }
 
         lines = record.split("\n")
@@ -39,7 +40,7 @@ def parse_customer_data(content):
                 if key in customer_data:
                     customer_data[key] = value
 
-        if customer_data['account_number']:  # Only add if account number exists
+        if customer_data["account_number"]:  # Only add if account number exists
             customers.append(customer_data)
 
     return customers
@@ -54,6 +55,7 @@ def save_customer_data(customers):
             for key, value in customer.items():
                 f.write(f"{key}={value}\n")
             f.write("---\n")
+
 
 def save_transaction(account_number, transaction_type, amount):
     """
@@ -71,7 +73,6 @@ def save_transaction(account_number, transaction_type, amount):
 
     with open(TRANSACTION_FILE, "a") as f:
         f.write(transaction_block)
-
 
 
 def parse_transactions(account_number):
@@ -98,12 +99,7 @@ def parse_transactions(account_number):
             continue
 
         # Initialize transaction data
-        transaction_data = {
-            'account_number': '',
-            'type': '',
-            'amount': '0',
-            'date': ''
-        }
+        transaction_data = {"account_number": "", "type": "", "amount": "0", "date": ""}
 
         lines = record.split("\n")
         for line in lines:
@@ -113,7 +109,7 @@ def parse_transactions(account_number):
                     transaction_data[key] = value
 
         # Only add if it matches the account number
-        if transaction_data['account_number'] == account_number:
+        if transaction_data["account_number"] == account_number:
             transactions.append(transaction_data)
 
     return transactions
@@ -157,12 +153,12 @@ def deposit():
 
     # Find and update customer
     for customer in customers:
-        if customer['account_number'] == acc:
+        if customer["account_number"] == acc:
             found = True
-            current_balance = int(customer['balance'])
+            current_balance = int(customer["balance"])
             new_balance = current_balance + amount
-            customer['balance'] = str(new_balance)
-            customer['last_logged_in'] = date.today().strftime("%Y-%m-%d")
+            customer["balance"] = str(new_balance)
+            customer["last_logged_in"] = date.today().strftime("%Y-%m-%d")
 
             # Save updated data
             save_customer_data(customers)
@@ -179,6 +175,7 @@ def deposit():
         print(f"\nAvailable accounts:")
         for customer in customers:
             print(f"  - {customer['account_number']} ({customer['name']})")
+    
 
 
 def withdraw():
@@ -188,7 +185,7 @@ def withdraw():
     acc = input("Enter your account number: ")
     amount = int(input("Withdraw amount: "))
 
-    if amount <=0:
+    if amount <= 0:
         print("Invalid amount!")
         return
 
@@ -210,17 +207,21 @@ def withdraw():
 
     # Find and update customer
     for customer in customers:
-        if customer['account_number'] == acc:
+        if customer["account_number"] == acc:
             found = True
-            current_balance = int(customer['balance'])
+            current_balance = int(customer["balance"])
 
             if current_balance < amount:
                 print("Insufficient balance!")
                 return
 
             new_balance = current_balance - amount
-            customer['balance'] = str(new_balance)
-            customer['last_logged_in'] = date.today().strftime("%Y-%m-%d")
+            if new_balance < 500:
+                print("Cannot withdraw! Minimum balance of Rs. 500 must be maintained.")
+                return
+
+            customer["balance"] = str(new_balance)
+            customer["last_logged_in"] = date.today().strftime("%Y-%m-%d")
 
             # Save updated data
             save_customer_data(customers)
@@ -228,8 +229,9 @@ def withdraw():
             # Record transaction
             save_transaction(acc, "WITHDRAW", amount)
 
-            print(f"\n✅ Withdrawn Rs. {amount} successfully!")
+            print(f"\nWithdrawn Rs. {amount} successfully!")
             print(f"New Balance: Rs. {new_balance}")
+            clear_screen()
             break
 
     if not found:
@@ -260,7 +262,7 @@ def check_balance():
 
     # Find customer
     for customer in customers:
-        if customer['account_number'] == acc:
+        if customer["account_number"] == acc:
             found = True
             print(f"\n--- Account Details ---")
             print(f"Account Number: {customer['account_number']}")
@@ -289,9 +291,9 @@ def print_statement():
             customers = parse_customer_data(content)
 
             for customer in customers:
-                if customer['account_number'] == acc:
-                    customer_name = customer['name']
-                    customer_balance = customer['balance']
+                if customer["account_number"] == acc:
+                    customer_name = customer["name"]
+                    customer_balance = customer["balance"]
                     break
 
     # Print statement header
@@ -312,11 +314,13 @@ def print_statement():
     total_wd = 0
 
     for transaction in transactions:
-        transaction_date = transaction['date']
-        transaction_type = transaction['type']
-        transaction_amount = transaction['amount']
+        transaction_date = transaction["date"]
+        transaction_type = transaction["type"]
+        transaction_amount = transaction["amount"]
 
-        print(f"{transaction_date:<15} {transaction_type:<15} Rs. {transaction_amount:<12}")
+        print(
+            f"{transaction_date:<15} {transaction_type:<15} Rs. {transaction_amount:<12}"
+        )
 
         if transaction_type == "DEPOSIT":
             total_dep += int(transaction_amount)
@@ -329,11 +333,12 @@ def print_statement():
     print(f"Total Deposited: Rs. {total_dep}")
     print(f"Total Withdrawn: Rs. {total_wd}")
     print("=" * 80)
+    clear_screen
 
 
 def change_password():
     """
-    Change customer password.
+    Changing the  customer's password.
     """
     acc = input("Enter your account number: ")
     old_pw = input("Enter old password: ")
@@ -357,19 +362,20 @@ def change_password():
 
     # Find and update customer
     for customer in customers:
-        if customer['account_number'] == acc:
+        if customer["account_number"] == acc:
             found = True
 
-            if customer['password'] != old_pw:
+            if customer["password"] != old_pw:
                 print("Incorrect old password!")
                 return
 
-            customer['password'] = new_pw
+            customer["password"] = new_pw
 
             # Save updated data
             save_customer_data(customers)
 
-            print("\n✅ Password changed successfully!")
+            print("\n Password changed successfully!")
+            clear_screen()
             break
 
     if not found:
@@ -406,4 +412,3 @@ def user_menu():
             break
         else:
             print("Invalid choice. Try again.")
-

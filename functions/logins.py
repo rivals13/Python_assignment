@@ -1,4 +1,4 @@
-from functions.mail_checker import email_checker
+from functions.initial_login_mail_checker import email_checker
 from functions.password_checker import (
     password_checker_admin,
     password_checker_staff,
@@ -8,9 +8,11 @@ from functions.admin_feature import admin_menu
 from functions.staff_feature import staff_menu
 from functions.customer_features import user_menu
 from datetime import date
+from functions.cli_utils import clear_screen
+
 
 def admin_login():
-    print("new function being executed!!")
+    
     tries = 0
     while tries < 3:
         email = str(input("Please enter the valid email:"))
@@ -34,6 +36,7 @@ def admin_login():
             print("\ncurrent status: loggedin(🟢)")
             print(f"Welcome, {admin_name}!")
             admin_menu()
+            clear_screen()
             break
         else:
             print("Try again!!")
@@ -41,11 +44,12 @@ def admin_login():
             print(f"current try: {tries}")
 
     if tries == 3:
-        print('Thank you for using the tool!')
+        print("Thank you for using the tool!")
 
 
 def staff_login():
     tries = 0
+    
     print("staff login function executed")
 
     while tries < 3:
@@ -69,6 +73,7 @@ def staff_login():
             print("\ncurrent status:  loggedin(🟢)")
             print(f"Welcome, {staff_name}!")
             staff_menu()
+            clear_screen()
             break
         else:
             print("Try again!!")
@@ -76,11 +81,12 @@ def staff_login():
             print(f"current try: {tries}")
 
     if tries == 3:
-        print('Thank you for using the tool!')
+        print("Thank you for using the tool!")
 
 
 def user_login():
     tries = 0
+
     print("user login function executed")
 
     while tries < 3:
@@ -104,6 +110,7 @@ def user_login():
             print("\ncurrent status: loggedin(🟢)")
             print(f"Welcome, {user_name}!")
             user_menu()
+            clear_screen()
             break
         else:
             print("Try again!!")
@@ -111,4 +118,4 @@ def user_login():
             print(f"current try: {tries}")
 
     if tries == 3:
-        print('Thank you for using the tool!')
+        print("Thank you for using the tool!")

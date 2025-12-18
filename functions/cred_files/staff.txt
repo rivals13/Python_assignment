@@ -1,72 +1,4 @@
-email=ramchhetri@gmail.com
-name=Ram Thapa
-password=LBEF-stf124
-last_logged_in=2025-12-10
-address= kathmandu,Baneshwor
-contact=+977-9866063007
----
-email=bimal@gmail.com
-name=Bimal mahatara
-password=LBEF-stf123
-last_logged_in=2025-12-01
-address=Pokhara,Nepal
-contact=+977-9866063122
----
-staff_id=532934
-email=nirmal@yahoo.com
-name=Nirmal dahal
-password=LBEF-stf669
-created_on=2025-12-14
-last_logged_in=Never
-address= Nawalparasi,Nepal
-contact=+977-12345678
----
-staff_id=348900
-email=satyaraj@gmail.com
-name=Satyaraj joshi
-password=LBEF-stf100
-created_on=2025-12-14
-last_logged_in=Never
-address=Palpa,Nepal
-contact=+977-98543210
----
-staff_id=940619
-email=suraj@gmail.com
-name=suraj yadav
-password=LBEF-stf169
-created_on=2025-12-14
-last_logged_in=Never
-address=Palpa,Nepal
-contact=+977-986603231232
----
-staff_id=792019
-email=1
-name=1
-password=LBEF-stf640
-created_on=2025-12-14
-last_logged_in=Never
-address=Nepal
-contact=+977-986622213
----
-staff_id=735926
-email=1
-name=1
-password=LBEF-stf560
-created_on=2025-12-14
-last_logged_in=Never
-address=kalikot,Nepal
-contact=+977-986606334411
----
-staff_id=470129
-email=aa
-name=aa
-password=LBEF-stf182
-created_on=2025-12-14
-last_logged_in=Never
-address=Pokhara,Nepal
-contact=+977-98660611123567
----
-staff_id=401749
+staff_id=401752
 email=samabalpr@gmail.com
 name=Sambal prbahuji
 password=LBEF-stf6285
@@ -88,14 +20,14 @@ Contact_number=12
 nationality=ab
 Citizenship=aa
 ---
-staff_id=926192
-email=test@gmail
-name=test
-password=LBEF-stf9495
-created_on=2025-12-14
-last_logged_in=2025-12-14
-address=1
-Contact_number=sa
-nationality=n
-Citizenship=1232343434
+staff_id=792754
+email=nirmala@yahoo.com
+name=sam
+password=LBEF-stf3615
+created_on=2025-12-18
+last_logged_in=2025-12-18
+address=Nepal
+Contact_number=1234567890
+nationality=Nepali
+Citizenship=111123343434344
 ---

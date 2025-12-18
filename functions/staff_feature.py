@@ -2,10 +2,11 @@ import random as rd
 from datetime import date, datetime
 import os
 from  functions.user_details_validation import  validate_user_details
+from functions.cli_utils import clear_screen
 # File paths for storing data
 staff_file = 'functions/cred_files/staff.txt'
 user_file = "functions/cred_files/user.txt"
-TRANSACTION_FILE = "functions/cred_files/transactions.txt"
+TRANSACTION_FILE = "functions/cred_files/transaction.txt"
 
 
 # ============ STAFF FUNCTIONS ============
@@ -49,29 +50,25 @@ def register_customer():
 
     # Create directory if it doesn't exist
     os.makedirs('cred_files', exist_ok=True)
-    write_response = validate_user_details(name, email, contact_number, password_value, citizenship_number, address,nationality)
+    write_response = validate_user_details(name, email, contact_number, default_password, citizenship_number, address,nationality)
 
     # Write customer data to file in proper format
     if write_response:
         with open(user_file, "a") as f:
             f.write(
-            f"staff_id={name}\n"
-            f"email={email}\n"
-            f"name={account_type}\n"
-            f"password={address}\n"
-            f"created_on={contact_number}\n"
-            f"account_created_date={created_date}\n"
             f"account_number={account_number}\n"
-            f"Contact_number={contact_number}\n"
-            f"nationality={nationality}\n"
-            f"Citizenship={citizenship_number}\n"
+            f"email={email}\n"
+            f"name={name}\n"
             f"account_type={account_type}\n"
-            f"Password={default_password}\n"
+            f"password={default_password}\n"
+            f"balance={balance}\n"
+            f"created_on={created_date}\n"
+            f"last_logged_in={created_date}\n"
             "---\n"
         )
 
     # Display success message with account details
-        print(f"\n✅ Customer registered successfully!")
+        print(f"\nCustomer registered successfully!")
         print(f"Account Number: {account_number}")
         print(f"Name: {name}")
         print(f"Email: {email}")
@@ -87,7 +84,7 @@ def update_customer_details():
     Update existing customer details such as account type, password, or email.
     Searches for customer by account number and allows modification.
     """
-    acc = int(input("Enter customer account number: "))
+    acc = input("Enter customer account number: ")
 
     # Check if customer file exists
     if not os.path.exists(user_file):
@@ -139,8 +136,11 @@ def update_customer_details():
                 print("Account type updated!")
             elif choice == "2":
                 new_pw = input("Enter new password: ")
-                customer_data['password'] = new_pw
-                print("Password updated!")
+                if len(new_pw) != 12 or not new_pw.startswith("LBEF-usr") or not new_pw[8:].isdigit() or len(new_pw[8:]) != 4:
+                    print("Invalid password format! Password must be in the format LBEF-usrXXXX (where XXXX are 4 digits).")
+                else:
+                    customer_data['password'] = new_pw
+                    print("Password updated!")
             elif choice == "3":
                 new_email = input("Enter new email: ")
                 customer_data['email'] = new_email
@@ -232,23 +232,44 @@ def generate_statement():
     # Read and display transactions within date range
     if os.path.exists(TRANSACTION_FILE):
         with open(TRANSACTION_FILE, "r") as f:
-            for line in f:
-                parts = line.strip().split("|")
-                if len(parts) != 4:
+            content = f.read().strip()
+        
+        if content:
+            records = content.split("---\n")
+            
+            for record in records:
+                record = record.strip()
+                if not record:
                     continue
-
-                t_acc, ttype, amt, d = parts
-
+                
+                # Parse transaction data
+                transaction_data = {
+                    'account_number': '',
+                    'type': '',
+                    'amount': '0',
+                    'date': ''
+                }
+                
+                lines = record.split("\n")
+                for line in lines:
+                    if "=" in line:
+                        key, value = line.split("=", 1)
+                        if key in transaction_data:
+                            transaction_data[key] = value
+                
                 # Check if transaction belongs to this account
-                if t_acc == acc:
+                if transaction_data['account_number'] == acc:
                     try:
-                        dt = datetime.strptime(d, "%Y-%m-%d")
-
+                        dt = datetime.strptime(transaction_data['date'], "%Y-%m-%d")
+                        
                         # Check if transaction is within date range
                         if sd <= dt <= ed:
                             transaction_count += 1
+                            amt = transaction_data['amount']
+                            ttype = transaction_data['type']
+                            d = transaction_data['date']
                             print(f"{d:<15} {ttype:<15} Rs. {amt:<12} ")
-
+                            
                             # Update totals based on transaction type
                             if ttype == "DEPOSIT":
                                 total_dep += int(amt)
@@ -256,6 +277,8 @@ def generate_statement():
                                 total_wd += int(amt)
                     except ValueError:
                         continue
+        else:
+            print("No transaction records found.")
     else:
         print("No transaction records found.")
 
@@ -348,11 +371,12 @@ def staff_menu():
     Provides options for customer management and account operations.
     """
     while True:
-        # Display menu options
+        # Clear screen and display menu options
+        
         print("\n========== STAFF MENU ==========")
-        print("1. Register Customer")
+        print("1. Register new Customer")
         print("2. Update Customer Details")
-        print("3. Generate Statement")
+        print("3. Generate Statement of the Customer")
         print("4. View All Customers")
         print("5. Logout")
 

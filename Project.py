@@ -1,5 +1,7 @@
 from functions.logins import admin_login, staff_login, user_login
 from functions.admin_feature import admin_menu
+from functions.cli_utils import clear_screen
+import time
 
 # We have our  functions stored in the functions directory, so  we
 # are just importing the functions in the program.
@@ -9,14 +11,21 @@ isLoggedin = False  # Initial status of Login
 def welcome_display():
     print("Welcome to the banking management system")
     print("==" * 20)
+    print("Group details:")
+    print("Satyaraj joshi")
+    print("Rajkumar Tiruwa")
+    print("Sansar chhetri")
+    print("==" * 20)
     print("select one option")
     print("--" * 20)
     print("1 |Admin login 👨🏻‍💻|")
     print("\n2 |Staff Login 👨🏻‍💼|")
     print("\n3 |user Login 👨🏻‍💼|")
 
-    print("\n current status: Not logged in)")
+    print("\n current status: (Not logged in)")
     print("--" * 20)
+
+
 
 
 if not isLoggedin:
@@ -24,6 +33,8 @@ if not isLoggedin:
 
 
 def login(type_var):
+    # Clear the terminal before showing the login prompt
+    clear_screen()
     if type_var == "admin":
         print()
         print(f"you are trying to login in as: '{type_var}'")

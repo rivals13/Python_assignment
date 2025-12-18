@@ -216,8 +216,8 @@ def withdraw():
                 return
 
             new_balance = current_balance - amount
-            if new_balance < 500:
-                print("Cannot withdraw! Minimum balance of Rs. 500 must be maintained.")
+            if new_balance < 1000:
+                print("Cannot withdraw! Minimum balance of Rs. 1000 must be maintained.")
                 return
 
             customer["balance"] = str(new_balance)

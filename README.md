@@ -1,0 +1,1 @@
+Banking Service Application simulates a bank system with Admin, Staff, and Customer roles. Users can login securely, perform deposits/withdrawals, reset passwords, and generate account statements. Admin/Staff can manage accounts. Data is stored in text files; menu-driven interface ensures easy interaction. 

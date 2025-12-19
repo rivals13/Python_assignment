@@ -382,9 +382,57 @@ def change_password():
         print(f"Account {acc} not found!")
 
 
+def delete_account():
+    """
+    Delete the customer's own account after confirmation.
+    """
+    acc = input("Enter your account number: ")
+    pw = input("Enter your password: ")
+
+    # Read all customer data
+    if not os.path.exists(user_file):
+        print(f"ERROR: File does not exist at: {user_file}")
+        return
+
+    with open(user_file, "r") as f:
+        content = f.read().strip()
+
+    if not content:
+        print(f"ERROR: File is empty at: {user_file}")
+        return
+
+    # Parse customers
+    customers = parse_customer_data(content)
+    updated_customers = []
+    found = False
+
+    # Find and remove customer
+    for customer in customers:
+        if customer["account_number"] == acc:
+            found = True
+            if customer["password"] != pw:
+                print("Incorrect password!")
+                return
+            confirm = input("Are you sure you want to delete your account? (yes/no): ").strip().lower()
+            if confirm != "yes":
+                print("Account deletion cancelled.")
+                return
+            print("Account deleted successfully.")
+            continue  # Skip adding to updated_customers
+        updated_customers.append(customer)
+
+    if not found:
+        print("Account not found.")
+        return
+
+    # Save updated data
+    save_customer_data(updated_customers)
+    print("You have been logged out.")
+
+
 def user_menu():
     """
-    Main user menu interface.
+    Main user menu interface for the users.
     """
     while True:
         print("\n========== USER MENU ==========")
@@ -393,7 +441,8 @@ def user_menu():
         print("3. Check Balance")
         print("4. Print Statement")
         print("5. Change Password")
-        print("6. Logout")
+        print("6. Delete Account")
+        print("7. Logout")
 
         choice = input("Enter your choice: ")
 
@@ -408,6 +457,8 @@ def user_menu():
         elif choice == "5":
             change_password()
         elif choice == "6":
+            delete_account()
+        elif choice == "7":
             print("User logged out.")
             break
         else:

@@ -1,21 +1,25 @@
 from functions.logins import admin_login, staff_login, user_login
-from functions.admin_feature import admin_menu
-from functions.cli_utils import clear_screen
+from functions.cli_utils import clear_screen #contains the function to clear the screen
 import time
 
+# this is the main file  of the project
 # We have our  functions stored in the functions directory, so  we
 # are just importing the functions in the program.
 isLoggedin = False  # Initial status of Login
 
 
 def welcome_display():
-    print("Welcome to the banking management system")
+
+    
     print("==" * 20)
     print("Group details:")
-    print("Satyaraj joshi")
-    print("Rajkumar Tiruwa")
-    print("Sansar chhetri")
+    print('TEAM-6')
+    print("Satyaraj joshi(NP070996)")
+    print("Rajkumar Tiruwa(NP070980)")
+    print("Sansar chhetri(NP070995)")
     print("==" * 20)
+    print("Welcome to the banking management system")
+    print('=='*20)
     print("select one option")
     print("--" * 20)
     print("1 |Admin login 👨🏻‍💻|")
@@ -28,7 +32,7 @@ def welcome_display():
 
 
 
-if not isLoggedin:
+if not isLoggedin: #show welcome display only when not logged in
     welcome_display()
 
 

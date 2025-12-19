@@ -23,6 +23,7 @@ def create_staff():
     contact_number = input("Enter the contact number of the employee: ")
     nationality = input("Enter the nationality of the employee: ")
     citizenship_number = input("Enter the citizenship number of the employee: ")
+    age = input("Enter the age of the employee: ")
     write_response = validate_staff_details(
         name,
         email,
@@ -32,6 +33,7 @@ def create_staff():
         address,
         nationality,
         staff_id,
+        age,
     )
     if write_response:
         with open(staff_file, "a") as user_details:
@@ -46,6 +48,7 @@ def create_staff():
                 f"Contact_number={contact_number}\n"
                 f"nationality={nationality}\n"
                 f"Citizenship={citizenship_number}\n"
+                f"age={age}\n"
                 "---\n"
             )
 
@@ -183,12 +186,13 @@ def search_by_id_or_email():
 
 
 def update_staff_details():
-    """Update a staff record found by staff_id or email.
+    """Update or delete a staff record found by staff_id or email.
 
-    Prompts for identifier, shows current values and allows editing each
-    field (blank to keep). Writes updated records back to `staff_file`.
+    Prompts for identifier, then choose to update or delete.
+    For update: shows current values and allows editing each field (blank to keep).
+    Writes updated records back to `staff_file`.
     """
-    identifier = input("Enter staff ID or Email to update: ").strip()
+    identifier = input("Enter staff ID or Email to update/delete: ").strip()
     if not identifier:
         print("No identifier provided.")
         return
@@ -207,6 +211,16 @@ def update_staff_details():
     for part in parts:
         if identifier in part:
             found = True
+            print("\nStaff found. Choose action:")
+            print("1. Update details")
+            print("2. Delete staff")
+            action = input("Enter choice: ").strip()
+            
+            if action == "2":
+                print("Staff deleted successfully.")
+                continue  # Skip adding this part to updated_parts
+            
+            # Proceed with update
             # parse into dict
             data = {}
             for line in part.splitlines():
@@ -250,11 +264,12 @@ def update_staff_details():
 
     try:
         new_content = "---\n".join(updated_parts)
-        if not new_content.endswith("---\n"):
+        if updated_parts and not new_content.endswith("---\n"):
             new_content = new_content + "---\n"
         with open(staff_file, "w") as f:
             f.write(new_content)
-        print("Staff record updated successfully.")
+        if action != "2":  # Only print if not deleted
+            print("Staff record updated successfully.")
     except Exception as e:
         print("Failed to update staff file:", e)
 

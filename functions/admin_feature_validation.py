@@ -91,148 +91,133 @@ def validate_staff_details(
     address,
     nationality,
     staff_id,
+    age,
 ):
+    errors = []
+    
     # Name validation
     if name.isdigit():
-        print("Error: Name cannot be digits")
-        return False
+        errors.append("Error: Name cannot be digits")
     if len(name) < 2:
-        print("Error: Name is too short")
-        return False
+        errors.append("Error: Name is too short")
     if not all(c.isalpha() or c.isspace() for c in name):
-        print("Error: Name can only contain letters and spaces")
-        return False
+        errors.append("Error: Name can only contain letters and spaces")
 
     # Email validation
     if email in staff_emails:
-        print("Error: Staff email already exists!")
-        return False
+        errors.append("Error: Staff email already exists!")
     if email.isdigit():
-        print("Error: Invalid email format")
-        return False
-
+        errors.append("Error: Invalid email format")
 
     # Contact validation
     if not contact_number.isdigit():
-        print("Error: Contact number must contain only digits")
-        return False
+        errors.append("Error: Contact number must contain only digits")
     if len(contact_number) != 10:
-        print("Error: Contact number must be exactly 10 digits")
-        return False
+        errors.append("Error: Contact number must be exactly 10 digits")
     if contact_number in staff_contact:
-        print("Error: Contact number already exists!")
-        return False
+        errors.append("Error: Contact number already exists!")
 
     # Password validation
     if password in staff_passwords:
-        print("Error: Password already in use!")
-        return False
+        errors.append("Error: Password already in use!")
     # staff_id validation
     if password in staff_ids:
-        print("Error: Staff id  already exists!")
-        return False
+        errors.append("Error: Staff id  already exists!")
 
     # Citizenship validation
     if citizenship_number in staff_citizenship:
-        print("Error: Citizenship number already exists!")
-        return False
+        errors.append("Error: Citizenship number already exists!")
     if not citizenship_number.isdigit():
-        print("Error: Citizenship number must contain only digits")
-        return False
+        errors.append("Error: Citizenship number must contain only digits")
     if len(citizenship_number) < 5:
-        print("Error: Citizenship number is too short")
-        return False
+        errors.append("Error: Citizenship number is too short")
 
     # Address validation
     if address.isdigit():
-        print("Error: Address cannot be only digits")
-        return False
+        errors.append("Error: Address cannot be only digits")
     if len(address) < 3:
-        print("Error: Address is too short")
-        return False
+        errors.append("Error: Address is too short")
 
     # Nationality validation
     if nationality.isdigit():
-        print("Error: Nationality cannot be only digits")
-        return False
+        errors.append("Error: Nationality cannot be only digits")
     if len(nationality) < 3:
-        print("Error: Nationality is too short")
-        return False
+        errors.append("Error: Nationality is too short")
     if not all(c.isalpha() or c.isspace() for c in nationality):
-        print("Error: Nationality can only contain letters and spaces")
-        return False
+        errors.append("Error: Nationality can only contain letters and spaces")
+
+    # Age validation
+    try:
+        age_int = int(age)
+        if age_int <= 18:
+            errors.append("Error: Age must be greater than 18")
+        if age_int >= 60:
+            errors.append("Error: Age must be less than 60")
+    except ValueError:
+        errors.append("Error: Age must be a valid number")
 
     # Empty field checks
     if not name.strip():
-        print("Error: Name cannot be empty")
-        return False
+        errors.append("Error: Name cannot be empty")
     if not email.strip():
-        print("Error: Email cannot be empty")
-        return False
+        errors.append("Error: Email cannot be empty")
     if not password.strip():
-        print("Error: Password cannot be empty")
-        return False
+        errors.append("Error: Password cannot be empty")
     if not address.strip():
-        print("Error: Address cannot be empty")
-        return False
+        errors.append("Error: Address cannot be empty")
     if not nationality.strip():
-        print("Error: Nationality cannot be empty")
-        return False
+        errors.append("Error: Nationality cannot be empty")
+    if not age.strip():
+        errors.append("Error: Age cannot be empty")
 
     # validating the  email address of the new staff:
 
     valid_tlds = ["com", "info", "org", "net", "edu"]
-    first_stage = True
 
     # length check FIRST
     if len(email) < 4:
-        print("Email is too short")
-        return False
+        errors.append("Email is too short")
 
     # must contain exactly one @
     if email.count("@") != 1:
-        print("Email must contain exactly one '@'")
-        return False
+        errors.append("Email must contain exactly one '@'")
+    else:
+        atpos = email.find("@")
 
-    atpos = email.find("@")
+        # '@' position check
+        if atpos < 1:
+            errors.append("Invalid position of '@'")
 
-    # '@' position check
-    if atpos < 1:
-        print("Invalid position of '@'")
-        return False
+        # must contain dot
+        if "." not in email:
+            errors.append("Email must contain a dot (.)")
 
-    # must contain dot
-    if "." not in email:
-        print("Email must contain a dot (.)")
-        return False
+        # now SAFE to split
+        username, domain_part = email.split("@")
 
-    # now SAFE to split
-    username, domain_part = email.split("@")
+        if not username:
+            errors.append("Username part is missing")
 
-    if not username:
-        print("Username part is missing")
-        return False
+        if "." not in domain_part:
+            errors.append("Domain part is invalid")
 
-    if "." not in domain_part:
-        print("Domain part is invalid")
-        return False
+        domain, tld = domain_part.rsplit(".", 1)
+        # this  has been done to ensure that  we can work  easily  with email addresses having
+        # multiple dots within the e-mail.
 
-    domain, tld = domain_part.rsplit(".", 1)
-    # this  has been done to ensure that  we can work  easily  with email addresses having
-    # multiple dots within the e-mail.
+        if not domain:
+            errors.append("Domain name is missing")
 
-    if not domain:
-        print("Domain name is missing")
-        return False
-
-    if tld not in valid_tlds:
-        print("Invalid top-level domain")
-        return False
+        if tld not in valid_tlds:
+            errors.append("Invalid top-level domain")
 
     # checking if the email exists in user list
     if email in staff_emails or email in admin_emails or email in user_emails:
-    
-        print("The  email already exists!")
-        return False
+        errors.append("The  email already exists!")
 
+    if errors:
+        for error in errors:
+            print('\n')
+            print(error)
+        return False
     return True

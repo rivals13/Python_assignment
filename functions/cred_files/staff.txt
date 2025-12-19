@@ -1,17 +1,17 @@
-staff_id=401752
-email=samabalpr@gmail.com
-name=Sambal prbahuji
+staff_id=401753
+email=sambal@yahoo.com
+name=Sambal ghale
 password=LBEF-stf6285
 created_on=2025-12-14
 last_logged_in=2025-12-14
-address=golok
+address=Nepal
 Contact_number=9734343545
-nationality=Golokian
-Citizenship=93849
+nationality=Nepalese
+Citizenship=122323224
 ---
 staff_id=103616
 email=samabalpr@gmail.com
-name=sambal prabhuji
+name=Samman ghale
 password=LBEF-stf5990
 created_on=2025-12-14
 last_logged_in=2025-12-14

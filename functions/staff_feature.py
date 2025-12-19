@@ -35,10 +35,11 @@ def register_customer():
     name = input("Customer Name: ")
     email = input("Customer Email: ")
     account_type = input("Account Type (Savings/Current): ")
-    address = input("Enter the address of the employee: ")
-    contact_number = input("Enter the contact number of the employee: ")
-    nationality = input("Enter the nationality of the employee: ")
-    citizenship_number = input("Enter the citizenship number of the employee: ")
+    address = input("Enter the address of the customer: ")
+    contact_number = input("Enter the contact number of the customer: ")
+    nationality = input("Enter the nationality of the customer: ")
+    citizenship_number = input("Enter the citizenship number of the customer: ")
+    age = input("Enter the age of the customer: ")
     # Generate account credentials
     account_number = generate_account_number()
     password_value = rd.randint(1000, 9999)
@@ -50,7 +51,7 @@ def register_customer():
 
     # Create directory if it doesn't exist
     os.makedirs('cred_files', exist_ok=True)
-    write_response = validate_user_details(name, email, contact_number, default_password, citizenship_number, address,nationality)
+    write_response = validate_user_details(name, email, contact_number, default_password, citizenship_number, address, nationality, age)
 
     # Write customer data to file in proper format
     if write_response:
@@ -64,6 +65,7 @@ def register_customer():
             f"balance={balance}\n"
             f"created_on={created_date}\n"
             f"last_logged_in={created_date}\n"
+            f"age={age}\n"
             "---\n"
         )
 
@@ -81,8 +83,8 @@ def register_customer():
 
 def update_customer_details():
     """
-    Update existing customer details such as account type, password, or email.
-    Searches for customer by account number and allows modification.
+    Update or delete existing customer details such as account type, password, or email.
+    Searches for customer by account number and allows modification or deletion.
     """
     acc = input("Enter customer account number: ")
 
@@ -127,7 +129,12 @@ def update_customer_details():
             print("\n1. Update Account Type")
             print("2. Update Password")
             print("3. Update Email")
+            print("4. Delete Customer")
             choice = input("\nChoose: ")
+
+            if choice == "4":
+                print("Customer deleted successfully.")
+                continue  # Skip adding to updated_records
 
             # Update based on user choice
             if choice == "1":
@@ -165,7 +172,8 @@ def update_customer_details():
             f.write(record)
             f.write("---\n")
 
-    print("\n✅ Customer details updated successfully.")
+    if choice != "4":  # Only print if not deleted
+        print("\n✅ Customer details updated successfully.")
 
 
 def generate_statement():

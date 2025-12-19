@@ -77,7 +77,7 @@ def staff_login():
     """
     tries = 0
 
-    print("staff login function executed")
+
 
     while tries < 3:
         email = str(input("Please enter the valid email:"))
@@ -114,7 +114,6 @@ def staff_login():
 def user_login():
     tries = 0
 
-    print("user login function executed")
 
     while tries < 3:
         email = str(input("Please enter the valid email:"))

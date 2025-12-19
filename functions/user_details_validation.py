@@ -1,30 +1,41 @@
+"""
+User Validation Module
+
+This module contains validation functions for customer account creation.
+It validates customer details including name, email, contact, citizenship, address, nationality, and age.
+
+Functions:
+- validate_user_details(): Validates all customer input fields and returns all errors
+"""
+
 import string
 from functions.initial_login_mail_checker import email_checker
 
+# File paths for credential storage
 user_path = "functions/cred_files/user.txt"
 admin_path = "functions/cred_files/admin.txt"
 staff_path = "functions/cred_files/staff.txt"
 
-# User details
+# Lists to store existing user data for validation
 user_emails = []
 user_names = []
 user_passwords = []
 user_citizenship = []
 user_contact = []
 
-# Admin details
+# Lists to store existing admin data for validation
 admin_emails = []
 admin_names = []
 admin_passwords = []
 
-# Staff details
+# Lists to store existing staff data for validation
 staff_emails = []
 staff_names = []
 staff_passwords = []
 staff_citizenship = []
 staff_contact = []
 
-# Read admin file
+# Load existing admin data from file for duplicate checking
 with open(admin_path, "r") as admin_file:
     lines = admin_file.readlines()
     for line in lines:
@@ -39,7 +50,7 @@ with open(admin_path, "r") as admin_file:
             ignored_value, value = line.split("=", 1)
             admin_names.append(value)
 
-# Read staff file
+# Load existing staff data from file for duplicate checking
 with open(staff_path, "r") as staff_file:
     lines = staff_file.readlines()
     for line in lines:
@@ -60,7 +71,7 @@ with open(staff_path, "r") as staff_file:
             ignored_value, value = line.split("=", 1)
             staff_contact.append(value)
 
-# Read users file
+# Load existing user data from file for duplicate checking
 with open(user_path, "r") as user_file:
     lines = user_file.readlines()
     for line in lines:
@@ -86,8 +97,24 @@ def validate_user_details(
     name, email, contact_number, password, citizenship_number, address, nationality, age
 ):
     """
-    Validates user registration details.
-    Returns True if all validations pass, False otherwise.
+    Validate customer account details.
+
+    Performs comprehensive validation on all customer input fields including
+    name, email, contact, citizenship, address, nationality, and age.
+    Collects all validation errors and displays them.
+
+    Args:
+        name (str): Customer's full name
+        email (str): Customer's email address
+        contact_number (str): 10-digit contact number
+        password (str): Generated password
+        citizenship_number (str): Citizenship number
+        address (str): Residential address
+        nationality (str): Nationality
+        age (str): Age as string (must be 19-59)
+
+    Returns:
+        bool: True if all validations pass, False otherwise
     """
     errors = []
 

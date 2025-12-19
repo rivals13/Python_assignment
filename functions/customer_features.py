@@ -1,8 +1,22 @@
+"""
+Customer Features Module
+
+This module contains functions for customer operations in the banking management system.
+Includes account management, transactions, balance inquiries, and customer menu interface.
+
+Functions:
+- parse_customer_data(): Parse customer records from file
+- save_customer_data(): Save customer data to file
+- save_transaction(): Record transactions
+- user_menu(): Main customer menu interface
+- Various transaction and account management functions
+"""
+
 import os
 from datetime import date
 from functions.cli_utils import clear_screen
 
-# File paths for storing data (in parent directory's cred_files folder)
+# File paths for data storage
 user_file = "functions/cred_files/user.txt"
 TRANSACTION_FILE = "functions/cred_files/transaction.txt"
 

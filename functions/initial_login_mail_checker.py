@@ -1,25 +1,36 @@
+"""
+Email Checker Module
+
+This module provides email validation and lookup functions for login authentication.
+Loads stored email addresses and associated names from credential files.
+
+Functions:
+- email_checker(): Validate email and return associated user information
+"""
+
 import os
 
+# File paths for credential storage
 admin_path = "functions/cred_files/admin.txt"
 staff_path = "functions/cred_files/staff.txt"
 user_path = "functions/cred_files/user.txt"
 
-# Admin details
+# Lists to store loaded admin data
 emails = []
 ad_names = []
 admin_passwords = []
 
-# Staff details
+# Lists to store loaded staff data
 staff_emails = []
 staff_names = []
 staff_passwords = []
 
-# user details
+# Lists to store loaded user data
 user_names = []
 user_passwords = []
 user_emails = []
 
-# Read admin file
+# Load admin data from file
 with open(admin_path, "r") as admin_file:
     lines = admin_file.readlines()
     for line in lines:
@@ -34,7 +45,7 @@ with open(admin_path, "r") as admin_file:
             ignored_value, value = line.split("=", 1)
             ad_names.append(value)
 
-# Read staff  file
+# Load staff data from file
 with open(staff_path, "r") as file:
     lines = file.readlines()
     for line in lines:
@@ -66,6 +77,19 @@ with open(user_path, "r") as user_file:
 
 
 def email_checker(email):
+    """
+    Validate email format and check if it exists in the system.
+
+    Performs comprehensive email validation including format checks
+    and existence verification against stored user credentials.
+
+    Args:
+        email (str): Email address to validate
+
+    Returns:
+        tuple or int: (1, name) if valid admin/staff/user email found,
+                     0 if email is invalid or not found
+    """
     valid_tlds = ["com", "info", "org", "net", "edu"]
     first_stage = True
 

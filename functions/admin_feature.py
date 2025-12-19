@@ -1,3 +1,18 @@
+"""
+Admin Features Module
+
+This module contains functions for admin operations in the banking management system.
+Includes staff account creation, viewing details, customer record management, and search functionality.
+
+Functions:
+- create_staff(): Create new staff accounts with validation
+- view_all_details(): View staff and customer details
+- print_customer_records(): Display formatted customer records
+- search_by_id_or_email(): Search records by ID or email
+- update_staff_details(): Update or delete staff records
+- admin_menu(): Main admin menu interface
+"""
+
 import random as rd
 from datetime import date
 import os
@@ -5,17 +20,25 @@ from functions.admin_feature_validation import validate_staff_details
 import time
 from functions.cli_utils import clear_screen
 
+# File paths for data storage
 staff_file = "functions/cred_files/staff.txt"
 user_file = "functions/cred_files/user.txt"
 
 
 def create_staff():
+    """
+    Create a new staff account with validation.
+
+    Generates a unique staff ID and password, collects staff details,
+    validates input, and saves to file if valid.
+    """
     account_created_date = date.today().strftime("%Y-%m-%d")
-    #  few basic and  must be validated   for each entries
+    # Generate staff credentials
     staff_fixed_value = "LBEF-stf"
     password_value = rd.randint(1000, 9999)
     password = staff_fixed_value + str(password_value)
     staff_id = rd.randint(100000, 999999)
+
     print("\n---Staff Account creation portal ---")
     name = input("Enter the name of the employee: ")
     email = input("Enter the email address of the employee: ")
@@ -24,6 +47,8 @@ def create_staff():
     nationality = input("Enter the nationality of the employee: ")
     citizenship_number = input("Enter the citizenship number of the employee: ")
     age = input("Enter the age of the employee: ")
+
+    # Validate staff details
     write_response = validate_staff_details(
         name,
         email,
@@ -35,7 +60,9 @@ def create_staff():
         staff_id,
         age,
     )
+
     if write_response:
+        # Save staff data to file
         with open(staff_file, "a") as user_details:
             user_details.write(
                 f"staff_id={staff_id}\n"
@@ -52,9 +79,6 @@ def create_staff():
                 "---\n"
             )
 
-            # supposed to   use the writing once!!
-            # validation  is needed for each entries!!!
-
         print(f"\nStaff account created successfully!")
         print(f"Staff ID: {staff_id}")
         print(f"Name: {name}")
@@ -65,6 +89,12 @@ def create_staff():
     
 
 def view_all_details():
+    """
+    Display all staff and customer details.
+
+    Allows user to choose between viewing staff or customer records.
+    Reads and displays the contents of the respective files.
+    """
     print("Choose appropriate option:")
     print("1. View staff details")
     print("2. View users details")
@@ -104,6 +134,12 @@ def view_all_details():
 
 
 def print_customer_records():
+    """
+    Print formatted customer records in a table format.
+
+    Displays customer name, email, and creation date in a structured table.
+    Shows total count of customer records.
+    """
     print("\n--- Print Customer Records ---")
 
     if not os.path.exists(user_file):
@@ -150,6 +186,12 @@ def print_customer_records():
 
 
 def search_by_id_or_email():
+    """
+    Search for records by ID or email across staff and customer files.
+
+    Prompts for search key and searches both staff and customer files
+    for matching records.
+    """
     key = input("Enter ID or Email to search: ")
     found = False
 
@@ -186,11 +228,11 @@ def search_by_id_or_email():
 
 
 def update_staff_details():
-    """Update or delete a staff record found by staff_id or email.
+    """
+    Update or delete a staff record by staff ID or email.
 
-    Prompts for identifier, then choose to update or delete.
-    For update: shows current values and allows editing each field (blank to keep).
-    Writes updated records back to `staff_file`.
+    Allows searching for staff by ID or email, then provides options
+    to update individual fields or delete the record entirely.
     """
     identifier = input("Enter staff ID or Email to update/delete: ").strip()
     if not identifier:
@@ -221,7 +263,7 @@ def update_staff_details():
                 continue  # Skip adding this part to updated_parts
             
             # Proceed with update
-            # parse into dict
+            # Parse record into dictionary
             data = {}
             for line in part.splitlines():
                 if "=" in line:
@@ -235,21 +277,21 @@ def update_staff_details():
                 if new:
                     data[key] = new
 
-            # ensure created_on and last_logged_in persist if present
+            # Ensure created_on and last_logged_in persist if present
             if "created_on" in data:
                 created_on = data["created_on"]
             else:
                 created_on = date.today().strftime("%Y-%m-%d")
             last_logged = data.get("last_logged_in", "")
 
-            # rebuild record with the exact keys/order; include empty values if missing
+            # Rebuild record with the exact keys/order; include empty values if missing
             keys_order = ["staff_id", "email", "name", "password", "created_on", "last_logged_in", "address", "Contact_number", "nationality", "Citizenship"]
             lines = []
             for k in keys_order:
                 if k == "created_on":
                     lines.append(f"created_on={created_on}")
                 elif k == "last_logged_in":
-                    # always include last_logged_in (may be blank)
+                    # Always include last_logged_in (may be blank)
                     lines.append(f"last_logged_in={data.get('last_logged_in', last_logged)}")
                 else:
                     lines.append(f"{k}={data.get(k, '')}")
@@ -273,9 +315,15 @@ def update_staff_details():
     except Exception as e:
         print("Failed to update staff file:", e)
 
+
 def admin_menu():
+    """
+    Main admin menu interface.
+
+    Provides a menu-driven interface for admin operations including
+    staff creation, viewing details, customer management, and search.
+    """
     while True:
-        
         print("\n========== ADMIN MENU ==========")
         print("1. Create Staff Account")
         print("2. View All Staff and Customer Details")
@@ -283,8 +331,6 @@ def admin_menu():
         print("4. Search by ID or Email")
         print("5. update staff details")
         print("6. Logout")
-
-        
 
         choice = input("\nEnter your choice: ")
 

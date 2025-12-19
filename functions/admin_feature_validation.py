@@ -1,23 +1,34 @@
+"""
+Staff Validation Module
+
+This module contains validation functions for staff account creation.
+It validates staff details including name, email, contact, citizenship, address, nationality, and age.
+
+Functions:
+- validate_staff_details(): Validates all staff input fields and returns all errors
+"""
+
 import string
 from functions.initial_login_mail_checker  import email_checker
 
+# File paths for credential storage
 admin_path = "functions/cred_files/admin.txt"
 staff_path = "functions/cred_files/staff.txt"
 user_path = "functions/cred_files/user.txt"
 
-# User details
+# Lists to store existing user data for validation
 user_emails = []
 user_names = []
 user_passwords = []
 user_citizenship = []
 user_contact = []
 
-# Admin details
+# Lists to store existing admin data for validation
 admin_emails = []
 admin_names = []
 admin_passwords = []
 
-# Staff details
+# Lists to store existing staff data for validation
 staff_emails = []
 staff_names = []
 staff_passwords = []
@@ -25,7 +36,7 @@ staff_citizenship = []
 staff_contact = []
 staff_ids = []
 
-# Read admin file
+# Load existing admin data from file for duplicate checking
 with open(admin_path, "r") as admin_file:
     lines = admin_file.readlines()
     for line in lines:
@@ -40,7 +51,7 @@ with open(admin_path, "r") as admin_file:
             ignored_value, value = line.split("=", 1)
             admin_names.append(value)
 
-# Read staff file
+# Load existing staff data from file for duplicate checking
 with open(staff_path, "r") as staff_file:
     lines = staff_file.readlines()
     for line in lines:
@@ -61,7 +72,7 @@ with open(staff_path, "r") as staff_file:
             ignored_value, value = line.split("=", 1)
             staff_contact.append(value)
 
-# Read staff  file
+# Load additional staff data including IDs
 with open(staff_path, "r") as file:
     lines = file.readlines()
     for line in lines:
@@ -75,7 +86,6 @@ with open(staff_path, "r") as file:
         if line.startswith("name="):
             ignored_value, value = line.split("=", 1)
             staff_names.append(value)
-
         if line.startswith("staff_id="):
             ignored_value, value = line.split("=", 1)
             staff_ids.append(value)
@@ -93,6 +103,27 @@ def validate_staff_details(
     staff_id,
     age,
 ):
+    """
+    Validate staff account details.
+
+    Performs comprehensive validation on all staff input fields including
+    name, email, contact, citizenship, address, nationality, and age.
+    Collects all validation errors and displays them.
+
+    Arguments:
+        name (str): Staff member's full name
+        email (str): Staff member's email address
+        contact_number (str): 10-digit contact number
+        password (str): Generated password
+        citizenship_number (str): Citizenship number
+        address (str): Residential address
+        nationality (str): Nationality
+        staff_id (int): Unique staff ID
+        age (str): Age as string (must be 19-59)
+
+    Returns:
+        bool: True if all validations pass, False otherwise
+    """
     errors = []
     
     # Name validation

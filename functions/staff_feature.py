@@ -1,3 +1,16 @@
+"""
+Staff Features Module
+
+This module contains functions for staff operations in the banking management system.
+Includes customer registration, account management, updates, and viewing functionality.
+
+Functions:
+- generate_account_number(): Generate unique account numbers
+- register_customer(): Register new customers with validation
+- update_customer_details(): Update or delete customer records
+- view_all_customers(): Display all customer details
+"""
+
 import random as rd
 from datetime import date, datetime
 import os
@@ -27,7 +40,9 @@ def generate_account_number():
 def register_customer():
     """
     Register a new customer by collecting their details and saving to file.
-    Generates a unique account number and default password.
+
+    Collects customer information including personal details, validates input,
+    generates unique account number and password, and saves to file if valid.
     """
     print("\n--- Register Customer ---")
 
